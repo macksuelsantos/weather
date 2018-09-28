@@ -1,14 +1,17 @@
 package com.weather.application.activity;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.widget.TextView;
 
 import com.weather.R;
+import com.weather.application.helper.SysHelper;
+import com.weather.fieldholders.WeatherFieldHolder;
 import com.weather.infraestructure.RequestHandler;
 import com.weather.infraestructure.retrofit.client.WeatherRestClient;
-import com.weather.fieldholders.WeatherFieldHolder;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        getWeather("Maceio,br");
+        getWeather("São Paulo,br");
     }
 
     private void getWeather(String city) {
@@ -68,15 +71,15 @@ public class MainActivity extends AppCompatActivity {
 
         mTextViewCity.setText(weatherFieldHolder.getCity());
 
-        mTextViewTemp.setText(String.valueOf(weatherFieldHolder.main.temp));
-        mTextViewTempMin.setText(String.valueOf(weatherFieldHolder.main.tempMin));
-        mTextViewTempMax.setText(String.valueOf(weatherFieldHolder.main.tempMax));
+        mTextViewTemp.setText(String.format(Locale.getDefault(), "%d°C", weatherFieldHolder.getTempCelsius()));
+        mTextViewTempMin.setText(String.format(Locale.getDefault(), "%d°", weatherFieldHolder.getTempMinCelsius()));
+        mTextViewTempMax.setText(String.format(Locale.getDefault(), "%d°", weatherFieldHolder.getTempMaxCelsius()));
 
-        mTextViewWeather.setText(weatherFieldHolder.weathers.get(0).main);
+        mTextViewWeather.setText(weatherFieldHolder.getWeather());
 
-        mTextViewHumidity.setText(String.valueOf(weatherFieldHolder.main.humidity));
-        
-        mTextViewSunrise.setText(String.valueOf(weatherFieldHolder.sys.sunrise));
-        mTextViewSunset.setText(String.valueOf(weatherFieldHolder.sys.sunset));
+        mTextViewHumidity.setText(String.format(Locale.getDefault(), "%d%%", weatherFieldHolder.getHumidity()));
+
+        mTextViewSunrise.setText(SysHelper.convertHourMinutes(weatherFieldHolder.getSunrise()));
+        mTextViewSunset.setText(SysHelper.convertHourMinutes(weatherFieldHolder.getSunset()));
     }
 }

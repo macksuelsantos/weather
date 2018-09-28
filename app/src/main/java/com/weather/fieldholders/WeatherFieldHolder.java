@@ -25,4 +25,46 @@ public class WeatherFieldHolder {
 
         return name != null ? name : "";
     }
+
+    public int getTempCelsius() {
+        if (main == null) return 0;
+
+        return (int) main.temp;
+    }
+
+    public int getTempMaxCelsius() {
+        if (main == null) return 0;
+
+        return (int) main.tempMax;
+    }
+
+    public int getTempMinCelsius() {
+        if (main == null) return 0;
+
+        return (int) main.tempMin;
+    }
+
+    public int getHumidity() {
+        if (main == null) return 0;
+
+        return main.humidity;
+    }
+
+    public long getSunrise() {
+        if (sys == null) return 0;
+
+        return sys.sunrise;
+    }
+
+    public long getSunset() {
+        if (sys == null) return 0;
+
+        return sys.sunset;
+    }
+
+    public String getWeather() {
+        if (weathers == null || weathers.isEmpty()) return "";
+
+        return weathers.get(0).main;
+    }
 }

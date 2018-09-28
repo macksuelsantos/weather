@@ -19,7 +19,7 @@ public class WeatherRestClient extends AbstractRestClient {
     }
 
     public void getWeather(RequestHandler<WeatherFieldHolder> requestHandler, String city) {
-        Call call = mWeatherService.getWeather(city, APPID);
+        Call call = mWeatherService.getWeather(city, APPID, "metric");
         addEnqueue(call, requestHandler);
     }
 }
