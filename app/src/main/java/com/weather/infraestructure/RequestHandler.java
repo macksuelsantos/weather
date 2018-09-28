@@ -10,13 +10,10 @@ import android.util.Log;
  */
 public class RequestHandler<T> implements Handler<T> {
 
-    private final Context mContext;
     private ProgressDialog mProgressDialog;
 
     public RequestHandler(Context context) {
-        mContext = context;
-
-        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog = new ProgressDialog(context);
         mProgressDialog.setMessage("Loading...");
         mProgressDialog.setCancelable(false);
 
