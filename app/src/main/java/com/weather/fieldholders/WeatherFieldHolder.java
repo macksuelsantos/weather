@@ -17,4 +17,12 @@ public class WeatherFieldHolder {
     public ArrayList<Weather> weathers;
 
     public Sys sys;
+
+    public String getCity() {
+        if (sys != null && sys.country != null) {
+          return name + ", " + sys.country;
+        }
+
+        return name != null ? name : "";
+    }
 }
