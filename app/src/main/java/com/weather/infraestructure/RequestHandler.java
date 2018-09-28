@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class RequestHandler<T> implements Handler<T> {
 
-    private ProgressDialog mProgressDialog;
+    private final ProgressDialog mProgressDialog;
 
     public RequestHandler(Context context) {
         mProgressDialog = new ProgressDialog(context);

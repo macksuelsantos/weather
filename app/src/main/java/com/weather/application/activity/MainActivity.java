@@ -1,10 +1,15 @@
 package com.weather.application.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.weather.R;
@@ -23,12 +28,17 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextViewHumidity, mTextViewSunrise, mTextViewSunset;
     private ImageView mImageViewIcon;
 
+    private EditText mEditTextCity;
+    private View mContainer;
+
     private WeatherRestClient mWeatherRestClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContainer = findViewById(R.id.activity_main_container);
 
         mTextViewCity = findViewById(R.id.activity_main_text_view_city);
 
@@ -45,28 +55,23 @@ public class MainActivity extends AppCompatActivity {
 
         mImageViewIcon = findViewById(R.id.activity_main_image_view_icon);
 
+        mEditTextCity = findViewById(R.id.activity_main_edit_text_city);
+
+        Button buttonFind = findViewById(R.id.activity_main_button_find);
+        buttonFind.setOnClickListener(onClickButtonFindListener);
+
         mWeatherRestClient = new WeatherRestClient(this);
     }
 
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        getWeather("Maceió");
-    }
-
     private void getWeather(String city) {
+        mContainer.setVisibility(View.GONE);
+
         mWeatherRestClient.getWeather(new RequestHandler<WeatherFieldHolder>(this) {
             @Override
             public void onSuccess(WeatherFieldHolder response) {
                 super.onSuccess(response);
 
                 setupView(response);
-            }
-
-            @Override
-            public void onFail(Throwable error) {
-                super.onFail(error);
             }
         }, city);
     }
@@ -88,5 +93,30 @@ public class MainActivity extends AppCompatActivity {
         mTextViewSunset.setText(SysHelper.convertHourMinutes(weatherFieldHolder.getSunset()));
 
         Picasso.get().load("http://openweathermap.org/img/w/" + weatherFieldHolder.getIcon() + ".png").into(mImageViewIcon);
+
+        mContainer.setVisibility(View.VISIBLE);
+    }
+
+    private final View.OnClickListener onClickButtonFindListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            String city = mEditTextCity.getText().toString();
+
+            if (!city.isEmpty()) {
+                hideKeyboard(MainActivity.this);
+                getWeather(city);
+            } else {
+                Toast.makeText(MainActivity.this, "Digite o nome da cidade.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    private static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

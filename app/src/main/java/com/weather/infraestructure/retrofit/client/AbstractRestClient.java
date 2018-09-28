@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 abstract class AbstractRestClient<T> {
 
-    protected static final String APPID = "903a7eab47f20e0bd580b60ee7760f14";
+    static final String APPID = "903a7eab47f20e0bd580b60ee7760f14";
 
     private final Activity mActivity;
 
@@ -34,7 +34,7 @@ abstract class AbstractRestClient<T> {
         this.mActivity = activity;
     }
 
-    Retrofit createRetrofit() {
+    private Retrofit createRetrofit() {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
                 .create();
@@ -47,11 +47,11 @@ abstract class AbstractRestClient<T> {
                 .build();
     }
 
-    OkHttpClient getHttpClient() {
+    private OkHttpClient getHttpClient() {
         return new OkHttpClient().newBuilder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(5, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS)
                 .build();
     }
 

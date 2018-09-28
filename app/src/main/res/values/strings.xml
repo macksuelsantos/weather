@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="pesquise_por_cidade">Pesquise por cidade</string>
+    <string name="procurar">Procurar</string>
+    <string name="min">Min</string>
+    <string name="max">Max</string>
+    <string name="umidade">Umidade</string>
+    <string name="nascer_do_sol">Nascer do Sol</string>
+    <string name="p_r_do_sol">Pôr do Sol</string>
 </resources>

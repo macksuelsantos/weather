@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class WeatherFieldHolder {
 
-    public String name;
+    private String name;
 
     private Main main;
 
