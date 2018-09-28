@@ -2,7 +2,6 @@ package com.weather.infraestructure;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 
 
 /**
@@ -27,10 +26,6 @@ public class RequestHandler<T> implements Handler<T> {
 
     @Override
     public void onFail(Throwable error) {
-        if (error != null && error.getMessage() != null) {
-            Log.e("RequestHandler", error.getMessage());
-        }
-
         dismissProgressDialog();
     }
 

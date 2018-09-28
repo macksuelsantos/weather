@@ -73,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
 
                 setupView(response);
             }
+
+            @Override
+            public void onFail(Throwable error) {
+                super.onFail(error);
+
+                Toast.makeText(MainActivity.this, "Ooops, algo deu errado.", Toast.LENGTH_SHORT).show();
+            }
         }, city);
     }
 
