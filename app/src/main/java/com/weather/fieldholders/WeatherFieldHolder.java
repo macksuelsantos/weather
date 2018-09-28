@@ -11,12 +11,12 @@ public class WeatherFieldHolder {
 
     public String name;
 
-    public Main main;
+    private Main main;
 
     @SerializedName("weather")
-    public ArrayList<Weather> weathers;
+    private ArrayList<Weather> weathers;
 
-    public Sys sys;
+    private Sys sys;
 
     public String getCity() {
         if (sys != null && sys.country != null) {
@@ -66,5 +66,11 @@ public class WeatherFieldHolder {
         if (weathers == null || weathers.isEmpty()) return "";
 
         return weathers.get(0).main;
+    }
+
+    public String getIcon() {
+        if (weathers == null || weathers.isEmpty()) return "50d";
+
+        return weathers.get(0).icon;
     }
 }

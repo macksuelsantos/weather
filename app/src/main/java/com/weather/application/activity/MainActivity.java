@@ -3,8 +3,10 @@ package com.weather.application.activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.weather.R;
 import com.weather.application.helper.SysHelper;
 import com.weather.fieldholders.WeatherFieldHolder;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextViewTemp, mTextViewTempMin, mTextViewTempMax;
     private TextView mTextViewWeather;
     private TextView mTextViewHumidity, mTextViewSunrise, mTextViewSunset;
+    private ImageView mImageViewIcon;
 
     private WeatherRestClient mWeatherRestClient;
 
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         mTextViewSunrise = findViewById(R.id.activity_main_text_view_sunrise);
         mTextViewSunset = findViewById(R.id.activity_main_text_view_sunset);
 
+        mImageViewIcon = findViewById(R.id.activity_main_image_view_icon);
+
         mWeatherRestClient = new WeatherRestClient(this);
     }
 
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
-        getWeather("São Paulo,br");
+        getWeather("Maceió");
     }
 
     private void getWeather(String city) {
@@ -81,5 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         mTextViewSunrise.setText(SysHelper.convertHourMinutes(weatherFieldHolder.getSunrise()));
         mTextViewSunset.setText(SysHelper.convertHourMinutes(weatherFieldHolder.getSunset()));
+
+        Picasso.get().load("http://openweathermap.org/img/w/" + weatherFieldHolder.getIcon() + ".png").into(mImageViewIcon);
     }
 }
